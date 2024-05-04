@@ -76,7 +76,7 @@ def start_menu():
 
         pygame.display.flip()
 
-def game_loop(color):
+def game_loop():
     print("Игра запущена")
     frog_player = color
 
