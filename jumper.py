@@ -40,8 +40,6 @@ platform_img = pygame.image.load('img/platform.png').convert_alpha()
 
 # загрузка разноцветных лягушек для выбора игроку
 green_frog = pygame.image.load('img/GreenFrogIdle.png').convert_alpha()
-blue_frog = pygame.image.load('img/BlueFrogIdle.png').convert_alpha()
-purple_frog = pygame.image.load('img/PurpleFrogIdle.png').convert_alpha()
 
 # загрузка спрайтов врага
 enemy_img = pygame.image.load('img/sprite_enemy(46x30).png').convert_alpha()
@@ -73,77 +71,13 @@ def start_menu():
                 running = False
                 pygame.quit()
             if key[pygame.K_SPACE]:
-                print("Нажата клавиши SPACE. Время выбрать персонажа!")
-                select_frog()
+                print("Нажата клавиши SPACE. Время играть!")
+                game_loop()
 
         pygame.display.flip()
-
-
-def select_frog():
-    global green_frog, blue_frog, purple_frog
-    # установка и настройка звукового сопровождения для меню
-    pygame.mixer.music.load('music & sound/menu_music.mp3')  # Come Play With Me - Kevin MacLeod
-    pygame.mixer.music.set_volume(0.7)
-    pygame.mixer.music.play(-1, 0.0)
-
-    # создание и настройка текста
-    font_surface = pygame.font.SysFont('Lucida_Sans', 30)
-    text_surface = font_surface.render("Выбери лягушку!", True, WHITE)  # текст предлагающий выбрать лягушку
-
-    # настройка платформы
-    platform = pygame.transform.scale(platform_img, (40, 10))
-
-    # настройка лягушек
-    green_frog_rect = green_frog.get_rect(topleft=(178, 275))
-    blue_frog_rect = blue_frog.get_rect(topleft=(3, 270))
-    purple_frog_rect = purple_frog.get_rect(topleft=(348, 280))
-
-    # переменная которая вернет выбор лягушки
-    selected_frog = None
-
-    running = True
-    while running:
-
-        # отображение бг и текста
-        screen.blit(background, (0, 0))
-        screen.blit(text_surface, (60, 150))
-
-        # отображение платформ
-        for i in range(3):
-            screen.blit(platform, (175 * i, 300))
-
-        # отображение лягушек
-        screen.blit(green_frog, (178, 275))
-        screen.blit(blue_frog, (3, 270))
-        screen.blit(purple_frog, (348, 280))
-
-        pos = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                pygame.quit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if pygame.mouse.get_pressed()[0] and green_frog_rect.collidepoint(pos):
-                    game_loop('green')
-                    print("Green")
-                    running = False
-                if pygame.mouse.get_pressed()[0] and blue_frog_rect.collidepoint(pos):
-                    game_loop('blue')
-                    print('Blue')
-                    running = False
-                if pygame.mouse.get_pressed()[0] and purple_frog_rect.collidepoint(pos):
-                    game_loop('purple')
-                    print("Purple")
-                    running = False
-
-        pygame.display.flip()
-
-    print(selected_frog)
-
 
 def game_loop(color):
-    print(f"Игра запущена с объектом: {color}")
+    print("Игра запущена")
     frog_player = color
 
     # переменные
@@ -306,13 +240,9 @@ def game_loop(color):
             if self.rect.top > SCREEN_HEIGHT:
                 self.kill()  # удаление платформы
 
-    if frog_player == "green":
-        jumper = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, green_frog)
-    elif frog_player == "blue":
-        jumper = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, blue_frog)
-    elif frog_player == "purple":
-        jumper = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, purple_frog)
-
+   
+    jumper = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 150, green_frog)
+   
     # группа спрайтов
     platform_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
