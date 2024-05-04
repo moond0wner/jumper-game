@@ -78,7 +78,6 @@ def start_menu():
 
 def game_loop():
     print("Игра запущена")
-    frog_player = color
 
     # переменные
     GRAVITY = 1
